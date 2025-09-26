@@ -3,8 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Fuel, Gauge, Zap, Star } from 'lucide-react';
-import r15Image from '@/assets/r15.jpg';
-import fzImage from '@/assets/fz.jpg';
+import r15Image from '@/assets/yamaha-r15-v4.jpg';
+import fzImage from '@/assets/yamaha-fz25.jpg';
+import r3Image from '@/assets/yamaha-r3.jpg';
+import mt15Image from '@/assets/yamaha-mt15.jpg';
 
 const Bikes = () => {
   const bikes = [
@@ -62,7 +64,7 @@ const Bikes = () => {
       id: 'r3',
       name: 'Yamaha R3',
       price: '₹4,64,000',
-      image: r15Image,
+      image: r3Image,
       category: 'Super Sports',
       highlights: ['321cc Engine', 'Twin Cylinder', 'KYB Suspension', 'Dual Channel ABS'],
       specs: {
@@ -112,7 +114,7 @@ const Bikes = () => {
       id: 'mt15',
       name: 'Yamaha MT-15',
       price: '₹1,68,300',
-      image: r15Image,
+      image: mt15Image,
       category: 'Naked',
       highlights: ['155cc Engine', 'VVA Technology', 'USD Forks', 'Naked Design'],
       specs: {

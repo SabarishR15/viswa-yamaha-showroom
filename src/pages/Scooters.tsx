@@ -3,7 +3,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Fuel, Gauge, Zap, Star } from 'lucide-react';
-import fascinoImage from '@/assets/fascino.jpg';
+import fascinoImage from '@/assets/yamaha-fascino.jpg';
+import rayZrImage from '@/assets/yamaha-rayzr.jpg';
+import aeroxImage from '@/assets/yamaha-aerox.jpg';
 
 const Scooters = () => {
   const scooters = [
@@ -36,7 +38,7 @@ const Scooters = () => {
       id: 'rayzr',
       name: 'Yamaha Ray ZR 125',
       price: '₹76,830',
-      image: fascinoImage,
+      image: rayZrImage,
       category: 'Street',
       highlights: ['125cc Engine', 'Sporty Design', 'LED Lighting', 'Disc Brake'],
       specs: {
@@ -61,7 +63,7 @@ const Scooters = () => {
       id: 'street-rally',
       name: 'Yamaha Ray ZR Street Rally',
       price: '₹79,230',
-      image: fascinoImage,
+      image: rayZrImage,
       category: 'Street',
       highlights: ['125cc Engine', 'Rally Graphics', 'Front Disc', 'Street Fighter Look'],
       specs: {
@@ -86,7 +88,7 @@ const Scooters = () => {
       id: 'aerox',
       name: 'Yamaha Aerox 155',
       price: '₹1,43,730',
-      image: fascinoImage,
+      image: aeroxImage,
       category: 'Maxi Scooter',
       highlights: ['155cc Engine', 'VVA Technology', 'Maxi Scooter', 'Smart Key'],
       specs: {
