@@ -30,20 +30,20 @@ const About = () => {
 
   const team = [
     {
-      name: 'Rajesh Kumar',
+      name: 'Arun',
       role: 'Showroom Manager',
-      experience: '12+ years',
+      experience: '8+ years',
       expertise: 'Sales & Customer Relations'
     },
     {
-      name: 'Suresh Babu',
+      name: 'Ranjith',
       role: 'Chief Technician',
       experience: '15+ years',
       expertise: 'Engine & Transmission'
     },
     {
-      name: 'Priya Nair',
-      role: 'Service Advisor',
+      name: 'Mahindran',
+      role: 'mechanic',
       experience: '8+ years',
       expertise: 'Customer Service & Scheduling'
     },
@@ -65,7 +65,7 @@ const About = () => {
     {
       icon: <Users className="h-6 w-6" />,
       title: '5000+ Happy Customers',
-      year: 'Since 2008',
+      year: 'Since 2015',
       description: 'Serving the community with quality'
     },
     {
@@ -102,7 +102,7 @@ const About = () => {
             About <span className="text-primary">Viswa Yamaha</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-            Your trusted Yamaha partner in Palakkad since 2008. We bring you the finest motorcycles, 
+            Your trusted Yamaha partner in Palakkad since 2015. We bring you the finest motorcycles, 
             scooters, and unmatched service experience in Kerala.
           </p>
           <Badge className="bg-primary text-primary-foreground text-sm px-4 py-2">
@@ -119,7 +119,7 @@ const About = () => {
               <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Established in 2008, Viswa Yamaha has been serving the people of Palakkad and 
+                  Established in 2015, Viswa Yamaha has been serving the people of Palakkad and 
                   surrounding areas with dedication and commitment to excellence. What started as 
                   a small dealership has grown into one of Kerala's most trusted Yamaha partners.
                 </p>
@@ -138,7 +138,7 @@ const About = () => {
             <div className="grid grid-cols-2 gap-4">
               <Card className="shadow-card">
                 <CardContent className="p-6 text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">15+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">10+</div>
                   <div className="text-sm text-muted-foreground">Years of Service</div>
                 </CardContent>
               </Card>
@@ -156,7 +156,7 @@ const About = () => {
               </Card>
               <Card className="shadow-card">
                 <CardContent className="p-6 text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">10K+</div>
+                  <div className="text-3xl font-bold text-primary mb-2">50K+</div>
                   <div className="text-sm text-muted-foreground">Services Done</div>
                 </CardContent>
               </Card>
