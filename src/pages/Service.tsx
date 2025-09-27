@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { CalendarDays, Clock, Wrench, CheckCircle, User, Bike, FileText } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Service = () => {
   const { toast } = useToast();
@@ -30,7 +31,7 @@ const Service = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -46,24 +47,61 @@ const Service = () => {
       return;
     }
 
-    // Simulate booking confirmation
-    toast({
-      title: "Service Booked Successfully!",
-      description: `Your service slot has been confirmed for ${formData.preferredDate} at ${formData.preferredTime}. We'll contact you soon.`,
-    });
+    try {
+      // Save to Supabase database
+      const { data, error } = await supabase
+        .from('service booking')
+        .insert([
+          {
+            customer_name: formData.customerName,
+            contact_number: formData.phone,
+            vehicle_model: formData.vehicleModel,
+            vehicle_number: formData.vehicleNumber,
+            complaints: formData.complaints || null,
+            preferred_date: formData.preferredDate,
+            preferred_time: formData.preferredTime,
+            vehicle_type: formData.serviceType || 'bike/scooter'
+          }
+        ])
+        .select();
 
-    // Reset form
-    setFormData({
-      customerName: '',
-      phone: '',
-      email: '',
-      vehicleModel: '',
-      vehicleNumber: '',
-      complaints: '',
-      serviceType: '',
-      preferredDate: '',
-      preferredTime: ''
-    });
+      if (error) {
+        console.error('Error saving booking:', error);
+        toast({
+          title: "Booking Failed",
+          description: "There was an error saving your booking. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Success
+      toast({
+        title: "Service Booked Successfully!",
+        description: `Your service slot has been confirmed for ${formData.preferredDate} at ${formData.preferredTime}. We'll contact you soon.`,
+      });
+
+      // Reset form
+      setFormData({
+        customerName: '',
+        phone: '',
+        email: '',
+        vehicleModel: '',
+        vehicleNumber: '',
+        complaints: '',
+        serviceType: '',
+        preferredDate: '',
+        preferredTime: ''
+      });
+
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast({
+        title: "Booking Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const serviceTypes = [
