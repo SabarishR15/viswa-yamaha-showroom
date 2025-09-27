@@ -4,7 +4,8 @@ import { Badge } from '@/components/ui/badge';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Fuel, Gauge, Zap, Star } from 'lucide-react';
 import r15Image from '@/assets/yamaha-r15-v4.jpg';
-import fzImage from '@/assets/yamaha-fz25.jpg';
+import fzv3Image from '@/assets/yamaha-fz-v3.jpg';
+import fz25Image from '@/assets/yamaha-fz25.jpg';
 import r3Image from '@/assets/yamaha-r3.jpg';
 import mt15Image from '@/assets/yamaha-mt15.jpg';
 
@@ -39,7 +40,7 @@ const Bikes = () => {
       id: 'fz',
       name: 'Yamaha FZ 25',
       price: '₹1,46,300',
-      image: fzImage,
+      image: fz25Image,
       category: 'Naked',
       highlights: ['249cc Engine', 'Fuel Injection', 'LED Lighting', 'Single Channel ABS'],
       specs: {
@@ -89,7 +90,7 @@ const Bikes = () => {
       id: 'fz250',
       name: 'Yamaha FZS 25',
       price: '₹1,55,300',
-      image: fzImage,
+      image: fz25Image,
       category: 'Naked',
       highlights: ['249cc Engine', 'Bluetooth Connectivity', 'LED Package', 'ABS'],
       specs: {

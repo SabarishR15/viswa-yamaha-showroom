@@ -179,7 +179,7 @@ const Service = () => {
               <CardContent>
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">For urgent repairs:</p>
-                  <p className="font-semibold text-primary">+91 9876543210</p>
+                  <p className="font-semibold text-primary">+91 8289945641</p>
                   <p className="text-xs text-muted-foreground">Available 24/7 for emergency services</p>
                 </div>
               </CardContent>

@@ -19,8 +19,8 @@ import {
 const About = () => {
   const contact = {
     address: 'Kozhinjampara, Palakkad, Kerala 678555',
-    phone: '+91 9876543210',
-    email: 'info@viswayamaha.com',
+    phone: '+91 8281302641',
+    email: 'viswayamaha70@gmail.com',
     hours: {
       weekdays: '9:00 AM - 7:00 PM',
       saturday: '9:00 AM - 6:00 PM',
@@ -48,7 +48,7 @@ const About = () => {
       expertise: 'Customer Service & Scheduling'
     },
     {
-      name: 'Anil Thomas',
+      name: 'Ebin',
       role: 'Parts Manager',
       experience: '10+ years',
       expertise: 'Genuine Parts & Inventory'

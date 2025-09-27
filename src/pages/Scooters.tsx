@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Fuel, Gauge, Zap, Star } from 'lucide-react';
 import fascinoImage from '@/assets/yamaha-fascino.jpg';
 import rayZrImage from '@/assets/yamaha-rayzr.jpg';
+import streetRallyImage from '@/assets/yamaha-rayzr-street-rally.jpg';
 import aeroxImage from '@/assets/yamaha-aerox.jpg';
 
 const Scooters = () => {
@@ -63,7 +64,7 @@ const Scooters = () => {
       id: 'street-rally',
       name: 'Yamaha Ray ZR Street Rally',
       price: '₹79,230',
-      image: rayZrImage,
+      image: streetRallyImage,
       category: 'Street',
       highlights: ['125cc Engine', 'Rally Graphics', 'Front Disc', 'Street Fighter Look'],
       specs: {
