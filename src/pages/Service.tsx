@@ -49,7 +49,7 @@ const Service = () => {
 
     try {
       // Save to Supabase database
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('service booking')
         .insert([
           {
@@ -62,8 +62,8 @@ const Service = () => {
             preferred_time: formData.preferredTime,
             vehicle_type: formData.serviceType || 'bike/scooter'
           }
-        ])
-        .select();
+        ]);
+
 
       if (error) {
         console.error('Error saving booking:', error);
