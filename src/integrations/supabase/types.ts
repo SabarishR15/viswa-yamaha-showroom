@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           complaints: string | null
           contact_number: string | null
+          created_at: string | null
           customer_name: string
           id: string
           preferred_date: string | null
@@ -29,6 +30,7 @@ export type Database = {
         Insert: {
           complaints?: string | null
           contact_number?: string | null
+          created_at?: string | null
           customer_name: string
           id?: string
           preferred_date?: string | null
@@ -40,6 +42,7 @@ export type Database = {
         Update: {
           complaints?: string | null
           contact_number?: string | null
+          created_at?: string | null
           customer_name?: string
           id?: string
           preferred_date?: string | null
