@@ -1,11 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Phone, MapPin } from 'lucide-react';
+import { Menu, X, Phone, MapPin, LogOut } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    // Check initial auth state
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  };
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -13,7 +34,6 @@ const Header = () => {
     { name: 'Scooters', href: '/scooters' },
     { name: 'Service', href: '/service' },
     { name: 'About', href: '/about' },
-    { name: 'Admin', href: '/admin' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -56,9 +76,26 @@ const Header = () => {
               <MapPin className="h-4 w-4" />
               <span>Kozhinjampara, Palakkad</span>
             </div>
-            <Button variant="hero" size="sm" asChild>
-              <Link to="/service">Book Service</Link>
-            </Button>
+            {isLoggedIn ? (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/admin">Admin</Link>
+                </Button>
+                <Button variant="ghost" size="sm" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/auth">Login</Link>
+                </Button>
+                <Button variant="hero" size="sm" asChild>
+                  <Link to="/service">Book Service</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -90,10 +127,27 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="px-4 pt-4 border-t border-border/50 mt-4">
-                <Button variant="hero" className="w-full" asChild>
-                  <Link to="/service">Book Service</Link>
-                </Button>
+              <div className="px-4 pt-4 border-t border-border/50 mt-4 space-y-2">
+                {isLoggedIn ? (
+                  <>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/admin">Admin</Link>
+                    </Button>
+                    <Button variant="ghost" className="w-full" onClick={handleLogout}>
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/auth">Login</Link>
+                    </Button>
+                    <Button variant="hero" className="w-full" asChild>
+                      <Link to="/service">Book Service</Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </nav>
           </div>

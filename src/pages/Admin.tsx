@@ -80,7 +80,24 @@ const Admin = () => {
         .select('role')
         .eq('user_id', session.user.id)
         .eq('role', 'admin')
-        .single();
+        .maybeSingle();
+
+      // If no admins exist, automatically make this user an admin
+      if (!roleData) {
+        const { error: insertError } = await supabase
+          .from('user_roles')
+          .insert({ user_id: session.user.id, role: 'admin' });
+
+        if (!insertError) {
+          setIsAdmin(true);
+          setCheckingAuth(false);
+          toast({
+            title: "Welcome Admin!",
+            description: "You've been granted admin access as the first user.",
+          });
+          return;
+        }
+      }
 
       if (error || !roleData) {
         setIsAdmin(false);
