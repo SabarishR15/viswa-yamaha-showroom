@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { CalendarDays, Clock, User, Phone, Car, FileText, Trash2, CheckCircle } from 'lucide-react';
+import { CalendarDays, Clock, User, Phone, Car, FileText, Trash2, CheckCircle, Shield } from 'lucide-react';
 
 interface ServiceBooking {
   id: string;
@@ -22,11 +23,24 @@ interface ServiceBooking {
 
 const Admin = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState<ServiceBooking[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    fetchBookings();
+    checkAdminAccess();
+  }, [navigate]);
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchBookings();
+    }
+  }, [isAdmin]);
+
+  useEffect(() => {
+    if (!isAdmin) return;
     
     // Set up real-time subscription for new bookings
     const channel = supabase
@@ -49,7 +63,39 @@ const Admin = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [toast]);
+  }, [toast, isAdmin]);
+
+  const checkAdminAccess = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        navigate('/auth');
+        return;
+      }
+
+      // Check if user has admin role
+      const { data: roleData, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .eq('role', 'admin')
+        .single();
+
+      if (error || !roleData) {
+        setIsAdmin(false);
+        setCheckingAuth(false);
+        return;
+      }
+
+      setIsAdmin(true);
+    } catch (error) {
+      console.error('Error checking admin access:', error);
+      setIsAdmin(false);
+    } finally {
+      setCheckingAuth(false);
+    }
+  };
 
   const fetchBookings = async () => {
     try {
@@ -102,13 +148,34 @@ const Admin = () => {
     }
   };
 
-  if (loading) {
+  if (checkingAuth || loading) {
     return (
       <div className="min-h-screen py-8 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading bookings...</p>
+          <p className="text-muted-foreground">
+            {checkingAuth ? 'Checking access...' : 'Loading bookings...'}
+          </p>
         </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen py-8 flex items-center justify-center">
+        <Card className="max-w-md mx-4">
+          <CardContent className="p-8 text-center">
+            <Shield className="h-16 w-16 text-destructive mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
+            <p className="text-muted-foreground mb-6">
+              You don't have permission to access this page. Admin access is required.
+            </p>
+            <Button onClick={() => navigate('/')}>
+              Go to Home
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     );
   }
