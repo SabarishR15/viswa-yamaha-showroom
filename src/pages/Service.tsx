@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 const Service = () => {
   const { toast } = useToast();
+  const [userId, setUserId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     customerName: '',
     phone: '',
@@ -23,6 +24,14 @@ const Service = () => {
     preferredDate: '',
     preferredTime: ''
   });
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserId(user?.id || null);
+    };
+    getUser();
+  }, []);
 
   const handleInputChange = (name: string, value: string) => {
     setFormData(prev => ({
@@ -49,20 +58,25 @@ const Service = () => {
 
     try {
       // Save to Supabase database
+      const bookingData: any = {
+        customer_name: formData.customerName,
+        contact_number: formData.phone,
+        vehicle_model: formData.vehicleModel,
+        vehicle_number: formData.vehicleNumber,
+        complaints: formData.complaints || null,
+        preferred_date: formData.preferredDate,
+        preferred_time: formData.preferredTime,
+        vehicle_type: formData.serviceType || 'bike/scooter'
+      };
+
+      // Include user_id only if user is authenticated
+      if (userId) {
+        bookingData.user_id = userId;
+      }
+
       const { error } = await supabase
         .from('service booking')
-        .insert([
-          {
-            customer_name: formData.customerName,
-            contact_number: formData.phone,
-            vehicle_model: formData.vehicleModel,
-            vehicle_number: formData.vehicleNumber,
-            complaints: formData.complaints || null,
-            preferred_date: formData.preferredDate,
-            preferred_time: formData.preferredTime,
-            vehicle_type: formData.serviceType || 'bike/scooter'
-          }
-        ]);
+        .insert([bookingData]);
 
 
       if (error) {

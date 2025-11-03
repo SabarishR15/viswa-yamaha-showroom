@@ -23,6 +23,7 @@ export type Database = {
           id: string
           preferred_date: string | null
           preferred_time: string | null
+          user_id: string | null
           vehicle_model: string | null
           vehicle_number: string | null
           vehicle_type: string | null
@@ -35,6 +36,7 @@ export type Database = {
           id?: string
           preferred_date?: string | null
           preferred_time?: string | null
+          user_id?: string | null
           vehicle_model?: string | null
           vehicle_number?: string | null
           vehicle_type?: string | null
@@ -47,6 +49,7 @@ export type Database = {
           id?: string
           preferred_date?: string | null
           preferred_time?: string | null
+          user_id?: string | null
           vehicle_model?: string | null
           vehicle_number?: string | null
           vehicle_type?: string | null
@@ -116,10 +119,7 @@ export type Database = {
         }
         Returns: boolean
       }
-      no_admins_exist: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      no_admins_exist: { Args: never; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "user"
